@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>784B7B15-08EC-45CC-A2BD-CE0CD86593AF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Pre_Process</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5B4E581407A6D85FAF5B1874DE882CBA185BF0E3</key>
+		<string>https://github.com/RydgeLi/3DFaceRecognition.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Pre_Process/Pre_Process.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5B4E581407A6D85FAF5B1874DE882CBA185BF0E3</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/RydgeLi/3DFaceRecognition.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5B4E581407A6D85FAF5B1874DE882CBA185BF0E3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5B4E581407A6D85FAF5B1874DE882CBA185BF0E3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>3DFaceRecognition</string>
+		</dict>
+	</array>
+</dict>
+</plist>

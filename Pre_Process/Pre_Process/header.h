@@ -27,4 +27,11 @@ typedef struct _Point3D
     int x, y, z;
 }Point3D;
 
+void getFiles(string, vector<string>);
+void readPoint(const char*, vector<Point3D>&);
+void readMarkPoint(const char*, vector<Point3D>&);
+void readSegPoint(const char*, vector<Point3D>&);
+void readPointFiles(const char*, vector<Point3D>&);
+
+
 #endif
