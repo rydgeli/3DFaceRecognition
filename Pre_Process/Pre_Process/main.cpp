@@ -158,62 +158,6 @@ void prepare_process()
 }
 
 
-//void segmentation(const char *filename, vector<Point3D> &source, vector<Point3D> &mark)
-//{
-//    FILE *fp;
-//    fp = fopen(filename, "w");
-//    vector<Point3D>::iterator it1;
-//    vector<Point3D>::size_type i = 2;
-//    int last_z = mark[i].z;
-//    cout << "鼻子的深度值为" << mark[i].z << endl;
-//    for (it1 = source.begin(); it1 != source.end(); it1++)
-//    {
-//        if (abs(it1->z - mark[i].z) <= 50)
-//        {
-//            fprintf(fp, "%d %d %d\n", it1->x, it1->y, it1->z);
-//            last_z = it1->z;
-//        }
-//        else
-//        {
-//            fprintf(fp, "%d %d %d\n", it1->x, it1->y, last_z);
-//        }
-//    }
-//    
-//    fclose(fp);
-//}
-
-
-//
-//void prepare_segmentation()
-//{
-//    string sourcePath = "/Users/rydge/desktop/Current/BS/eurecom3/face_data/";
-//    string markPath = "/Users/rydge/desktop/Current/BS/eurecom3/mark/";
-//    vector<string> sourceFiles, markFiles;
-//    string segPath = "/Users/rydge/desktop/Current/BS/eurecom3/seg/";
-//    string result_path;
-//    
-
-//    getFiles(sourcePath, sourceFiles);
-//    getFiles(markPath, markFiles);
-//    
-//    size_t size = sourceFiles.size();
-//    
-//    for (int i = 0; i < size; i++)
-//    {
-////        ostringstream oss;
-////        oss << (i+1);
-////        c = oss.str();
-//        
-//        vector<Point3D> source;
-//        vector<Point3D> mark;
-//        readSegPoint((sourcePath+sourceFiles[i]).c_str(), source);
-//        readMarkPoint((markPath+markFiles[i]).c_str(), mark);
-//        
-//        result_path = segPath +sourceFiles[i];
-//        segmentation(result_path.c_str(), source, mark);
-//    }
-//}
-
 int main()
 {
     
