@@ -29,13 +29,20 @@ typedef struct _Point3D
     double w = 1;
 }Point3D;
 
-double distance(double, double, double, double, double, double);
-double distance_2D(double x1, double y1, double x2, double y2);
-double calculate (vector<Point3D>, vector<Point3D>, vector<Point3D>);
-double calculate_depth(vector<Point3D>, vector<Point3D>);
+void showRGB(string imageName, string title);
+void showRGB_temp(string imageName, string title);
+
+void getFiles(string path, vector<string> &files);
+void readFiles(const char *filename, vector<Point3D> &P);//too slow!!!
 void readPoint(const char *filename, vector<Point3D> &P);
 void readMarkPoint(const char *filename, vector<Point3D> &P);
-void readFiles(const char *filename, vector<Point3D> &P);
+
+double calculate (vector<Point3D>, vector<Point3D>, vector<Point3D>);
+double calculate_depth(vector<Point3D>, vector<Point3D>);
+
+double distance(double, double, double, double, double, double);
+double distance_2D(double x1, double y1, double x2, double y2);
+
 void Weight(vector<Point3D> &p, vector<Point3D> &mark);
 
 

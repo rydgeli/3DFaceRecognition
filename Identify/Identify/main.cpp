@@ -8,62 +8,19 @@
 
 #include "calculate.h"
 
-//only for Windows
-//void getFiles(string path, vector<string>& files)
-//{
-//    //文件句柄
-//    long   hFile = 0;
-//    //文件信息
-//    struct _finddata_t fileinfo;
-//    string p;
-//    if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1)
-//    {
-//        do
-//        {
-//            //如果是目录,迭代之，如果不是，加入列表
-//            if ((fileinfo.attrib &  _A_SUBDIR))
-//            {
-//                if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0)
-//                    getFiles(p.assign(path).append("\\").append(fileinfo.name), files);
-//            }
-//            else
-//            {
-//                files.push_back(p.assign(path).append("\\").append(fileinfo.name));
-//            }
-//        } while (_findnext(hFile, &fileinfo) == 0);
-//        _findclose(hFile);
-//    }
-//}
 
-void getFiles(string path, vector<string> &files)
+void getFiles_test()
 {
     DIR* dir;
     dirent* pdir;
     
-    dir = opendir(path.c_str());
-    int count=0;
-    while ((pdir = readdir(dir))) {
-        if (count>=2)
-        {
-            files.push_back(pdir->d_name);
-        }
-        count++;
-    }
-    
-    closedir(dir);
-}
-
-void getFiles()
-{
-    DIR* dir;
-    dirent* pdir;
-    
-    dir = opendir("/Users/rydge/desktop/Current/BS/eurecom3/aligned/002_s1");
+    dir = opendir("/Users/rydge/desktop/Current/BS/eurecom3/seg");
     int count=0;
     while ((pdir = readdir(dir))) {
         if(count>=2)
         {
-            cout << pdir->d_name << endl;
+            if(strcmp(pdir->d_name, ".DS_Store"))
+               cout << pdir->d_name << endl;
         }
         count++;
     }
@@ -71,31 +28,6 @@ void getFiles()
     closedir(dir);
 }
 
-void showRGB(string imageName, string title)
-{
-    Mat img = imread(imageName);
-    if (img.empty())
-    {
-        fprintf(stderr, "Can't load image %s\n", imageName.c_str());
-        return;
-    }
-    
-    imshow(title, img);
-    waitKey();
-}
-
-void showRGB_temp(string imageName, string title)
-{
-    Mat img = imread(imageName);
-    if (img.empty())
-    {
-        fprintf(stderr, "Can't load image %s\n", imageName.c_str());
-        return;
-    }
-    imshow(title, img);
-    cvWaitKey(10);
-//    cvDestroyWindow(title.c_str());
-}
 
 void identify_x2()
 {
@@ -114,7 +46,6 @@ void identify_x2()
     vector<string> depthFiles_1,depthFiles_2, markFiles,rgbFiles;
     double distance_tmp, distance_min = 1000000;
     
-    //获取路径下所有文件
     getFiles(path_1, depthFiles_1);
     getFiles(path_2, depthFiles_2);
     getFiles(markPath, markFiles);
@@ -135,9 +66,6 @@ void identify_x2()
     for (int i = 0; i < size; i++)
     {
         vector<Point3D> source_1, source_2, mark;
-        //readPoint("C:\\Users\\Rydge\\Desktop\\face\\original\\r2.txt", source);
-        //readPoint("C:\\Users\\Rydge\\Desktop\\face\\aligned\\001\1\\2.1_1.1.txt", source);
-        //readPoint("C:\\Users\\Rydge\\Desktop\\eurecom\\s1\\depth\\depth_0001_s1_LightOn.txt", source);
         
         readPoint((path_1+depthFiles_1[i]).c_str(), source_1);
         readPoint((path_2+depthFiles_2[i]).c_str(), source_2);
@@ -170,8 +98,8 @@ void identify_x2()
 
 void identify()
 {
-    string probe = "039_s1";
-    string canonical = "001_s1";
+    string probe = "0002_s1";
+    string canonical = "0001_s1";
     string rgbPath = "/Users/rydge/desktop/Current/BS/eurecom3/rgb/";
     string rgbProbe = rgbPath + "/" + probe + ".bmp";
     string path = "/Users/rydge/desktop/Current/BS/eurecom3/aligned/" + canonical + "/";
@@ -182,20 +110,14 @@ void identify()
     vector<string> depthFiles,markFiles,rgbFiles;
     double distance_tmp, distance_min = 1000000;
     
-    //获取该路径下的所有文件
     getFiles(path, depthFiles);
     getFiles(markPath, markFiles);
     getFiles(rgbPath, rgbFiles);
     
     size_t size = depthFiles.size();
     
-    //for (int i = 0; i < size; i++)
-    //{
-    //	cout << files[i].c_str()<<endl;
-    //}
-    
     vector<Point3D> target;
-    string targetPath = path + "/" + probe + "_" + canonical + ".txt";
+    string targetPath = path + probe + " - " + canonical + ".txt";
     readPoint(targetPath.c_str(), target);
     showRGB(rgbProbe,"Probe Face");
     
@@ -221,7 +143,7 @@ void identify()
 
         //cout << files[i].c_str() << endl;
     }
-    cout << "识别脸深度文件为："<<depthResult.c_str() << endl << distance_min << endl;
+    cout << "识别脸深度文件为："<< depthResult.c_str() << endl << distance_min << endl;
     cout << "识别脸RGB文件为：" << rgbResult.c_str() << endl;
     showRGB(rgbPath+rgbResult, "Result Face");
 };
@@ -232,7 +154,7 @@ int main(int argc, const char * argv[]) {
     
 //    identify_x2();
     
-//    getFiles();
+//    getFiles_test();
     
     //vector<Point3D> source, target;
     //readPoint("C:\\Users\\Rydge\\Desktop\\face\\aligned\\001\\1\\4.2_1.1.txt", source);

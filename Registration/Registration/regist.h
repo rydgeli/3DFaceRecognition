@@ -30,7 +30,7 @@ typedef struct _Point3D
 
 void ReadPoint(const char *filename, vector<Point3D> &P);
 void ReadPoint3D_100(const char *filename, vector<Point3D> &P);
-void readPointFiles(const char* filename, vector<Point3D> &P);
+void readPointFiles(const char* filename, vector<Point3D> &P);// too slow!!!
 void SelectPoint3D(const char *filename, vector<Point3D> &P, int ratio = 100);
 void Writefile(const char *filename, vector<Point3D> &cloud);
 void getFiles(string path, vector<string> &files);
@@ -52,7 +52,5 @@ void PrintMatrix(double *M, int m, int n);
 void CalculateRotation(double *q, double *R);
 
 void TransPoint(vector<Point3D> &src, vector<Point3D> &dst, double *R, double *T,const char *path);
-
-
 
 #endif

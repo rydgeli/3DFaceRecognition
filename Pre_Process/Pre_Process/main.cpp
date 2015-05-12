@@ -96,7 +96,7 @@ void process(const char *filename, vector<Point3D> &source, vector<Point3D> &mar
     int corner_x = mark[i].x - 25;  //up left corner.x
     int corner_y = mark[i].y - 30;  //up left corner.y
     
-    cout<<"鼻子深度值为:  "<<mark[i].z<<endl;
+    cout<<"鼻子深度值为:  "<< mark[i].z <<endl;
     
     for (it1 = source.begin(); it1 != source.end(); it1++)
     {
@@ -105,12 +105,12 @@ void process(const char *filename, vector<Point3D> &source, vector<Point3D> &mar
         {
             if (abs(it1->z - mark[i].z) <= 50)
             {
-                fprintf(fp, "%d %d %d",it1->x-corner_x,it1->y-corner_y,it1->z);
-                last_z=it1->z;
+                fprintf(fp, "%d %d %d\n",it1->x-corner_x,it1->y-corner_y,it1->z);
+                last_z = it1->z;
             }
             else
             {
-                fprintf(fp, "%d %d %d", it1->x, it1->y, it1->z);
+                fprintf(fp, "%d %d %d\n", it1->x-corner_x, it1->y-corner_y,last_z);
             }
 
         }
@@ -120,16 +120,19 @@ void process(const char *filename, vector<Point3D> &source, vector<Point3D> &mar
 
 void prepare_process()
 {
-    string sourcePath = "/Users/rydge/desktop/Current/BS/eurecom3/source/";
-    string markPath = "/Users/rydge/desktop/Current/BS/eurecom3/mark/";
-    vector<string> sourceFiles, markFiles;
+    string sourcePath = "/Users/rydge/desktop/Current/BS/eurecom1/source/";
+    string markPath = "/Users/rydge/desktop/Current/BS/eurecom1/mark/";
+    string rgbPath = "/Users/rydge/desktop/Current/BS/eurecom1/rgb/";
+    
+    vector<string> sourceFiles, markFiles, rgbFiles;
 
-    string SegPath = "/Users/rydge/desktop/Current/BS/eurecom3/seg/";
+    string segPath = "/Users/rydge/desktop/Current/BS/eurecom1/seg/";
     string result_path;
     
     
     getFiles(sourcePath, sourceFiles);
     getFiles(markPath, markFiles);
+    getFiles(rgbPath, rgbFiles);
     
     size_t size = sourceFiles.size();
     
@@ -150,7 +153,7 @@ void prepare_process()
         readPoint((sourcePath+sourceFiles[i]).c_str(), source);
         readMarkPoint((markPath+markFiles[i]).c_str(), mark);
         
-        result_path = SegPath + sourceFiles[i];
+        result_path = segPath + sourceFiles[i];
         
         process(result_path.c_str(), source, mark);
         cout << result_path.c_str() << endl;
@@ -161,7 +164,6 @@ void prepare_process()
 int main()
 {
     
-//    prepare_detection();
     prepare_process();
     
 }

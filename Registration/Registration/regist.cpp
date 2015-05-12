@@ -98,7 +98,8 @@ void getFiles(string path, vector<string> &files)
     while ((pdir = readdir(dir))) {
         if (count>=2)
         {
-            files.push_back(pdir->d_name);
+            if(strcmp(pdir->d_name,".DS_Store"))
+                files.push_back(pdir->d_name);
         }
         count++;
     }

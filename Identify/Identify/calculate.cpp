@@ -8,6 +8,52 @@
 
 #include "calculate.h"
 
+void showRGB(string imageName, string title)
+{
+    Mat img = imread(imageName);
+    if (img.empty())
+    {
+        fprintf(stderr, "Can't load image %s\n", imageName.c_str());
+        return;
+    }
+    
+    imshow(title, img);
+    waitKey();
+}
+
+void showRGB_temp(string imageName, string title)
+{
+    Mat img = imread(imageName);
+    if (img.empty())
+    {
+        fprintf(stderr, "Can't load image %s\n", imageName.c_str());
+        return;
+    }
+    imshow(title, img);
+    cvWaitKey(10);
+    //    cvDestroyWindow(title.c_str());
+}
+
+void getFiles(string path, vector<string> &files)
+{
+    DIR* dir;
+    dirent* pdir;
+    
+    dir = opendir(path.c_str());
+    int count = 0;
+    while ((pdir = readdir(dir))) {
+        if (count >= 2)
+        {
+            if(strcmp(pdir->d_name, ".DS_Store"))
+                files.push_back(pdir->d_name);
+        }
+        count++;
+    }
+    
+    closedir(dir);
+}
+
+
 void readFiles(const char *filename, vector<Point3D> &P)
 {
     fstream file;
@@ -125,9 +171,12 @@ void Weight(vector<Point3D> &p, vector<Point3D> &mark)
 {
     vector<Point3D>::size_type i = 2;
     double left_eye[3], right_eye[3], nose[3], left_cheek[3], right_cheek[3], jaw[3];
+    
     double eye_radius = 5, nose_radius = 5, check_radius = 4, jaw_radius = 2;
+    
     vector<Point3D>::iterator w1, w2;
     int count = 0;
+    
     for (w1 = mark.begin(); w1 != mark.end(); w1++)
     {
         count++;
@@ -188,63 +237,5 @@ void Weight(vector<Point3D> &p, vector<Point3D> &mark)
             w2->w += 1;
         if (distance_2D(origin_x, origin_y, jaw[0], jaw[1]) < jaw_radius)
             w2->w += 0.5;
-        
-        //if ((origin_x >= left_eye[0]) && (origin_x <= right_eye[0]) && (origin_y >= left_eye[1]-5) && (origin_y <= left_eye[1]+5))
-        //	w2->w += 3;
-        //if ((origin_x >= nose[0] - 5) && (origin_x >= nose[0] + 5) && (origin_y <= nose[1]) && (origin_y >= right_eye[1]))
-        //	w2->w += 2;
-        //if ((origin_x >= left_cheek[0]) && (origin_x <= right_cheek[0]) && (origin_y <= right_cheek[1] + 5) && (origin_y >= right_cheek[1] - 5))
-        //	w2->w += 1;
-        //if (distance_2D(origin_x, origin_y, jaw[0], jaw[1]) <= jaw_radius)
-        //	w2->w += 0.5;
     }
-    
-    //for (w1 = p.begin(); count<6; w1++) {
-    //	if (count == 1)
-    //	{
-    //		right_eye[0] = w1->x;
-    //		right_eye[1] = w1->y;
-    //		right_eye[2] = w1->z;
-    //	}
-    //	else if (count == 2)
-    //	{
-    //		left_eye_center[0] = w1->x;
-    //		left_eye_center[1] = w1->y;
-    //		left_eye_center[2] = w1->z;
-    //	}
-    //	else if (count == 3)
-    //	{
-    //		nose_center[0] = w1->x;
-    //		nose_center[1] = w1->y;
-    //		nose_center[2] = w1->z;
-    //	}
-    //	else if (count == 4)
-    //	{
-    //		right_cheek_center[0] = w1->x;
-    //		right_cheek_center[1] = w1->y;
-    //		right_cheek_center[2] = w1->z;
-    //	}
-    //	else if (count == 5)
-    //	{
-    //		left_cheek_center[0] = w1->x;
-    //		left_cheek_center[1] = w1->y;
-    //		left_cheek_center[2] = w1->z;
-    //	}
-    //	count++;
-    //}
-    
-    //vector<Point3D>::iterator it1;
-    //for (it1 = p.begin(); it1 != p.end(); it1++) 
-    //{
-    //	if (distance(it1->x, it1->y, it1->z, right_eye_center[0], right_eye_center[1], right_eye_center[2])<eye_radius)
-    //		it1->w += 3;
-    //	else if (distance(it1->x, it1->y, it1->z, left_eye_center[0], left_eye_center[1], left_eye_center[2])<eye_radius)
-    //		it1->w += 3;
-    //	else if (distance(it1->x, it1->y, it1->z, nose_center[0], nose_center[1], nose_center[2])<nose_radius)
-    //		it1->w += 2;
-    //	else if (distance(it1->x, it1->y, it1->z, left_cheek_center[0], left_cheek_center[1], left_cheek_center[2])<check_radius)
-    //		it1->w += 1;
-    //	else if (distance(it1->x, it1->y, it1->z, right_cheek_center[0], right_cheek_center[1], right_cheek_center[2])<check_radius)
-    //		it1->w += 1;
-    //}
 }
