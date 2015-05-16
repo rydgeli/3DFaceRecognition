@@ -120,20 +120,34 @@ double calculate(vector<Point3D> source, vector<Point3D> target, vector<Point3D>
     Weight(source,mark);
     vector<Point3D>::iterator it1, it2;
     double dist = 0, temp = 0;
-//    int count = 0;
-    for (it1 = source.begin(), it2 = target.begin(); it1 != source.end() && it2 != target.end(); it1++, it2++) {
+
+    for (it1 = source.begin(), it2 = target.begin(); it1 != source.end() && it2 != target.end(); it1++, it2++)
+    {
         temp = distance(it1->x, it1->y, it1->z, it2->x, it2->y, it2->z);
-        //if (temp < 10)
         {
             temp = temp*it1->w;
             dist += temp;
         }
-        //temp = abs(it1->z - it2->z)*it1->w;
-        //count++;
-        //cout << "# " << count << " temp distance: " << temp << endl;
-        //cout << "weight: " << it1->w << endl;
     }
-//    cout << "Total Distance: " << dist << endl;
+    
+    return dist;
+}
+
+double calculate(vector<Point3D> source, vector<Point3D> target)
+{
+    Weight(source);
+    vector<Point3D>::iterator it1, it2;
+    double dist = 0, temp = 0;
+    
+    for (it1 = source.begin(), it2 = target.begin(); it1 != source.end() && it2 != target.end(); it1++, it2++)
+    {
+        temp = distance(it1->x, it1->y, it1->z, it2->x, it2->y, it2->z);
+        {
+            temp = temp*it1->w;
+            dist += temp;
+        }
+    }
+    
     return dist;
 }
 
@@ -239,3 +253,70 @@ void Weight(vector<Point3D> &p, vector<Point3D> &mark)
             w2->w += 0.5;
     }
 }
+
+void Weight(vector<Point3D> &p)
+{
+    double left_eye[3], right_eye[3], nose[3], left_cheek[3], right_cheek[3], jaw[3];
+    
+    double eye_radius = 8, nose_radius = 5, check_radius = 3, jaw_radius = 2;
+    
+    vector<Point3D>::iterator w1, w2;
+    int count = 0;
+    
+    for (w1 = p.begin(); w1 != p.end(); w1++)
+    {
+        count++;
+        switch (count)
+        {
+            case 1:
+                left_eye[0] = w1->x;
+                left_eye[1] = w1->y;
+                left_eye[2] = w1->z;
+                break;
+            case 2:
+                right_eye[0] = w1->x;
+                right_eye[1] = w1->y;
+                right_eye[2] = w1->z;
+                break;
+            case 3:
+                nose[0] = w1->x;
+                nose[1] = w1->y;
+                nose[2] = w1->z;
+                break;
+            case 4:
+                left_cheek[0] = w1->x;
+                left_cheek[1] = w1->y;
+                left_cheek[2] = w1->z;
+                break;
+            case 5:
+                right_cheek[0] = w1->x;
+                right_cheek[1] = w1->y;
+                right_cheek[2] = w1->z;
+                break;
+            case 6:
+                jaw[0] = w1->x;
+                jaw[1] = w1->y;
+                jaw[2] = w1->z;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    for (w2 = p.begin(); w2 != p.end(); w2++)
+    {
+        if (distance_2D(w2->x, w2->y, left_eye[0], left_eye[1]) < eye_radius)
+            w2->w += 3;
+        if (distance_2D(w2->x, w2->y, right_eye[0], right_eye[1]) < eye_radius)
+            w2->w += 3;
+        if (distance_2D(w2->x, w2->y, nose[0], nose[1]-10) < nose_radius)
+            w2->w += 2;
+        if (distance_2D(w2->x, w2->y, left_cheek[0], left_cheek[1]) < check_radius)
+            w2->w += 1;
+        if (distance_2D(w2->x, w2->y, right_cheek[0], right_cheek[1]) < check_radius)
+            w2->w += 1;
+        if (distance_2D(w2->x, w2->y, jaw[0], jaw[1]) < jaw_radius)
+            w2->w += 0.5;
+    }
+}
+

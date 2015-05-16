@@ -15,7 +15,6 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-//#include <io.h>
 #include <fstream>
 #include <opencv2/opencv.hpp>
 #include "dirent.h"
@@ -33,17 +32,19 @@ void showRGB(string imageName, string title);
 void showRGB_temp(string imageName, string title);
 
 void getFiles(string path, vector<string> &files);
-void readFiles(const char *filename, vector<Point3D> &P);//too slow!!!
+void readFiles(const char *filename, vector<Point3D> &P); //too slow !!!
 void readPoint(const char *filename, vector<Point3D> &P);
 void readMarkPoint(const char *filename, vector<Point3D> &P);
 
 double calculate (vector<Point3D>, vector<Point3D>, vector<Point3D>);
+double calculate (vector<Point3D>, vector<Point3D>);
 double calculate_depth(vector<Point3D>, vector<Point3D>);
 
 double distance(double, double, double, double, double, double);
 double distance_2D(double x1, double y1, double x2, double y2);
 
 void Weight(vector<Point3D> &p, vector<Point3D> &mark);
+void Weight(vector<Point3D> &p);
 
 
 #endif

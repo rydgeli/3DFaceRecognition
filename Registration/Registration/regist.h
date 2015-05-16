@@ -18,7 +18,8 @@
 
 using namespace std;
 
-#define maxPoints 3871//121//726
+#define maxPoints 3871
+#define shuMaxPoints 121
 
 //typedef unsigned char uchar;
 
@@ -29,6 +30,7 @@ typedef struct _Point3D
 
 
 void ReadPoint(const char *filename, vector<Point3D> &P);
+void ReadPoint_shu(const char *filename, vector<Point3D> &P);
 void ReadPoint3D_100(const char *filename, vector<Point3D> &P);
 void readPointFiles(const char* filename, vector<Point3D> &P);// too slow!!!
 void SelectPoint3D(const char *filename, vector<Point3D> &P, int ratio = 100);

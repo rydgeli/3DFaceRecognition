@@ -18,11 +18,21 @@ void registration(const char *source_path, const char *target_path, const char *
     ICP(source, target, out_path, R, T, e);
 }
 
+void registration_shu(const char *source_path, const char *target_path, const char *out_path)
+{
+    vector<Point3D> source,target;
+    double e = 0.01;
+    double R[9],T[3];
+    ReadPoint_shu(source_path, source);
+    ReadPoint_shu(target_path, target);
+    ICP(source, target, out_path, R, T, e);
+}
+
 void perform(string canonical)
 {
-    string canonical_path = "/Users/rydge/desktop/Current/BS/eurecom1/seg/depth_" + canonical + "_LightOn.txt";
-    string segPath = "/Users/rydge/desktop/Current/BS/eurecom1/seg/";
-    string alignedPath = "/Users/rydge/desktop/Current/BS/eurecom1/aligned/" + canonical + "/";
+    string canonical_path = "/Users/rydge/desktop/Current/BS/eurecom2/seg/depth_" + canonical + "_LightOn.txt";
+    string segPath = "/Users/rydge/desktop/Current/BS/eurecom2/seg/";
+    string alignedPath = "/Users/rydge/desktop/Current/BS/eurecom2/aligned/" + canonical + "/";
     string path = "";
     vector<string> segFiles;
     
@@ -39,11 +49,30 @@ void perform(string canonical)
     }
 }
 
+void perform_shu(string canonical)
+{
+    string cannonical_path = "/Users/rydge/desktop/Current/BS/shu_face/depth_source/" + canonical + ".txt";
+    string depthPath="/Users/rydge/desktop/Current/BS/shu_face/depth_source/";
+    string alignedPath="/Users/rydge/desktop/Current/BS/shu_face/aligned/"+ canonical + "/";
+    string path = "";
+    vector<string> depthFiles;
+    getFiles(depthPath, depthFiles);
+    
+    size_t size = depthFiles.size();
+    
+    for (int i=0;i<size;i++)
+    {
+        path = alignedPath + depthFiles[i].substr(0,6)+ " - " + canonical + ".txt";
+        cout<<path.c_str()<<endl;
+        registration_shu((depthPath + depthFiles[i]).c_str(), cannonical_path.c_str(), path.c_str());
+    }
+    
+}
 
 int main()
 {
-    string canonical="0002_s1";
-    perform(canonical);
+    string canonical="008_s1";
+    perform_shu(canonical);
     return 0;
 }
 

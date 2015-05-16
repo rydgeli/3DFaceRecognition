@@ -28,6 +28,26 @@ void ReadPoint(const char *filename, vector<Point3D> &P)
     fclose(fp);
 }
 
+void ReadPoint_shu(const char *filename, vector<Point3D> &P)
+{
+    FILE *fp = fopen(filename, "r");
+    if (fp == NULL)
+    {
+        printf("Open Error!!!");
+        exit(1);
+    }
+    else
+    {
+        for (int i = 0; i<shuMaxPoints; i++)
+        {
+            Point3D p;
+            fscanf(fp, "%lf%lf%lf", &p.x, &p.y, &p.z);
+            P.push_back(p);
+        }
+    }
+    fclose(fp);
+}
+
 void ReadPoint3D_100(const char *filename, vector<Point3D> &P)
 {
     FILE *fp = fopen(filename, "r");
@@ -111,20 +131,22 @@ void getFiles(string path, vector<string> &files)
 void ICP(vector<Point3D> &source, vector<Point3D> &target, const char *path, double *R, double *T, double e)
 {
     // P->source    Y->target
-    printf("|||||||||||||||||||\nRegistration Begins!\n|||||||||||||||||||||\n");
+    printf("**********\nRegistration Begins!\n**********\n");
     vector<Point3D> P, Y;
     vector<Point3D>::iterator it1, it2;
     double pre_d = 0.0, d = 0.0;
     int round = 0;
     P = source;
-    //
-    Y = target;
+    //when performing shu_face, add comments and peroform FindClosetPointSet()
+    //when performing eurecom face, don't excute FindCLosetPointSet()
+    
+//    Y = target;
     //
     do
     {
         pre_d = d;
         double R1[9], T1[3];
-        //FindClosestPointSet(target, P, Y);
+        FindClosestPointSet(target, P, Y);
         //P - original source; Y - new cloest points set of target
         Point3D _mean_P, _mean_Y;
         CalculateMeanPoint3D(P, _mean_P);//Source

@@ -148,32 +148,60 @@ void identify()
     showRGB(rgbPath+rgbResult, "Result Face");
 };
 
+void identify_shu()
+{
+    string probe = "002_s1";
+    string canonical = "001_s1";
+    string rgbPath = "/Users/rydge/desktop/Current/BS/shu_face/rgb/";
+    string rgbProbe = rgbPath + "/" + probe + ".bmp";
+    string path = "/Users/rydge/desktop/Current/BS/shu_face/aligned/" + canonical + "/";
+    string depthResult;
+    string rgbResult;
+    
+    vector<string> depthFiles,rgbFiles;
+    double distance_tmp, distance_min = 1000000;
+    
+    getFiles(path, depthFiles);
+    getFiles(rgbPath, rgbFiles);
+    
+    size_t size = depthFiles.size();
+    
+    vector<Point3D> target;
+    string targetPath = path + probe + " - " + canonical + ".txt";
+    readPoint(targetPath.c_str(), target);
+    showRGB(rgbProbe,"Probe Face");
+    
+    for (int i = 0; i < size; i++)
+    {
+        vector<Point3D> source, mark;
+        
+        readPoint((path+depthFiles[i]).c_str(), source);
+        cout << "源文件:     "<< depthFiles[i].c_str() << endl;
+        
+        distance_tmp = calculate(source, target);
+        cout << "欧氏距离:      " << distance_tmp << endl;
+        
+        if (distance_tmp < distance_min && distance_tmp > 0)
+        {
+            distance_min = distance_tmp;
+            depthResult = depthFiles[i];
+            rgbResult = rgbFiles[i];
+        }
+        showRGB_temp(rgbPath+rgbFiles[i],"Searching...");
+        
+    }
+    cout << "识别脸深度文件为："<< depthResult.c_str() << endl << distance_min << endl;
+    cout << "识别脸RGB文件为：" << rgbResult.c_str() << endl;
+    showRGB(rgbPath+rgbResult, "Result Face");
+};
+
 int main(int argc, const char * argv[]) {
     
-    identify();
+    identify_shu();
     
 //    identify_x2();
     
 //    getFiles_test();
-    
-    //vector<Point3D> source, target;
-    //readPoint("C:\\Users\\Rydge\\Desktop\\face\\aligned\\001\\1\\4.2_1.1.txt", source);
-    //readPoint("C:\\Users\\Rydge\\Desktop\\face\\aligned\\001\\1\\4.1_1.1.txt", target);
-    //calculate(source, target);
-    
-    //    double left_eye_center,right_eye_center,nose_center,left_cheek_center,right_cheek_center;
-    //    double eye_radius,nose_radius,cheek_radius;
-    //    int weight;                 //人脸区域权重
-    //    double temp=0,distance=0;
-    //    vector<Point3D>::iterator it1,it2;
-    //    int count=0;
-    //    for (it1=source.begin(),it2=target.begin(); it1!=source.end(); it1++,it2++) {
-    //        temp=distance_3D(it1->x, it1->y,it1->z,it2->x,it2->y,it2->z);
-    //        count++;
-    //        cout<<"#"<<count<<" temp distance: "<<temp<<endl;
-    //        distance=distance+temp;
-    //    }
-    //    cout<<"Total Distance: "<<distance<<endl;
     
     return 0;
 }
