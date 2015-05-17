@@ -93,6 +93,28 @@ void readPoint(const char*filename, vector<Point3D> &P)
     fclose(fp);
 }
 
+void shuReadPoints(const char*filename, vector<Point3D> &P)
+{
+    FILE *fp;
+    fp = fopen(filename, "r");
+    
+    if (fp == NULL)
+    {
+        printf("Open Error!!!");
+        exit(1);
+    }
+    else
+    {
+        for (int i = 0; i<shuMaxPoints; i++)
+        {
+            Point3D p;
+            fscanf(fp, "%lf%lf%lf", &p.x, &p.y, &p.z);
+            P.push_back(p);
+        }
+    }
+    fclose(fp);
+}
+
 void readMarkPoint(const char *filename, vector<Point3D> &P)
 {
     FILE *fp;

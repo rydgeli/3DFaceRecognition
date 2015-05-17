@@ -168,14 +168,14 @@ void identify_shu()
     
     vector<Point3D> target;
     string targetPath = path + probe + " - " + canonical + ".txt";
-    readPoint(targetPath.c_str(), target);
+    shuReadPoints(targetPath.c_str(), target);
     showRGB(rgbProbe,"Probe Face");
     
     for (int i = 0; i < size; i++)
     {
         vector<Point3D> source, mark;
         
-        readPoint((path+depthFiles[i]).c_str(), source);
+        shuReadPoints((path+depthFiles[i]).c_str(), source);
         cout << "源文件:     "<< depthFiles[i].c_str() << endl;
         
         distance_tmp = calculate(source, target);

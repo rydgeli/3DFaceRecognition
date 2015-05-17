@@ -10,6 +10,7 @@
 #define Identify_calculate_h
 
 #define maxPoints 3871
+#define shuMaxPoints 121
 #define markMaxPoints 6
 
 #include <iostream>
@@ -34,6 +35,7 @@ void showRGB_temp(string imageName, string title);
 void getFiles(string path, vector<string> &files);
 void readFiles(const char *filename, vector<Point3D> &P); //too slow !!!
 void readPoint(const char *filename, vector<Point3D> &P);
+void shuReadPoints(const char* filename, vector<Point3D> &P);
 void readMarkPoint(const char *filename, vector<Point3D> &P);
 
 double calculate (vector<Point3D>, vector<Point3D>, vector<Point3D>);
