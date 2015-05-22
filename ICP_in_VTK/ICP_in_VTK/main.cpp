@@ -46,18 +46,18 @@ int main(int argc, char *argv[])
 //    string strTarget = "/Users/rydge/desktop/face/source/002_s1.txt";
     
     
-    string probe = "008_s1";
-    string canonical = "004_s1";
+    string probe = "0002_s1";
+    string canonical = "0001_s1";
     // Eurecom 欧盟电信Kinect三维人脸库
-//    string strSource="/Users/rydge/desktop/Current/BS/eurecom3/seg/depth_" + probe + "_LightOn.txt";
-//    string strTarget="/Users/rydge/desktop/Current/BS/eurecom3/seg/depth_" + canonical+ "_LightOn.txt";
-//    
-//    string strAligned = "/Users/rydge/desktop/Current/BS/eurecom3/aligned/" + canonical +"/" + probe + " - " + canonical + ".txt";
+    string strSource="/Users/rydge/desktop/Current/BS/eurecom1/seg/depth_" + probe + "_LightOn.txt";
+    string strTarget="/Users/rydge/desktop/Current/BS/eurecom1/seg/depth_" + canonical+ "_LightOn.txt";
+    
+    string strAligned = "/Users/rydge/desktop/Current/BS/eurecom1/aligned/" + canonical +"/" + probe + " - " + canonical + ".txt";
     
     // SHU_face自建人脸库
-    string strSource = "/Users/rydge/desktop/Current/BS/shu_face/depth_source/" + probe + ".txt";
-    string strTarget = "/Users/rydge/desktop/Current/BS/shu_face/depth_source/" +canonical +".txt";
-    string strAligned = "/Users/rydge/desktop/Current/BS/shu_face/aligned/" + canonical +"/" + probe + " - " + canonical + ".txt";
+//    string strSource = "/Users/rydge/desktop/Current/BS/shu_face/depth_source/" + probe + ".txt";
+//    string strTarget = "/Users/rydge/desktop/Current/BS/shu_face/depth_source/" +canonical +".txt";
+//    string strAligned = "/Users/rydge/desktop/Current/BS/shu_face/aligned/" + canonical +"/" + probe + " - " + canonical + ".txt";
     
     ifstream fSource(strSource.c_str());
     ifstream fTarget(strTarget.c_str());
