@@ -7,7 +7,17 @@
 //
 
 #include "calculate.h"
+#include <time.h>
+double total_time=0;
+string ppl_no[21]={"001","002","003","004","005","006","007","008","009","010",
+    "011","012","013","014","015","016","017","018","019","020","021"};
+string ppl_set[5]={"s1","s2","s3","s4","s5"};
 
+string ppl_no_e[20]={"0001","0002","0003","0004","0005","0006","0007","0008","0009","0010",
+    "0011","0012","0013","0014","0015","0016","0017","0018","0019","0020"};
+
+int random_1;
+int random_2;
 
 void getFiles_test()
 {
@@ -98,12 +108,15 @@ void identify_x2()
 
 void identify()
 {
-    string probe = "0002_s1";
+//    string probe = "0005_s1";
     string canonical = "0001_s1";
-    string rgbPath = "/Users/rydge/desktop/Current/BS/eurecom3/rgb/";
+    random_1=rand() % 20;
+    random_2=rand() % 2;
+    string probe = ppl_no_e[random_1] + "_" + ppl_set[random_2];
+    string rgbPath = "/Users/rydge/desktop/Current/BS/eurecom1/rgb/";
     string rgbProbe = rgbPath + "/" + probe + ".bmp";
-    string path = "/Users/rydge/desktop/Current/BS/eurecom3/aligned/" + canonical + "/";
-    string markPath = "/Users/rydge/desktop/Current/BS/eurecom3/mark/";
+    string path = "/Users/rydge/desktop/Current/BS/eurecom1/aligned/" + canonical + "/";
+    string markPath = "/Users/rydge/desktop/Current/BS/eurecom1/mark/";
     string depthResult;
     string rgbResult;
     
@@ -120,6 +133,8 @@ void identify()
     string targetPath = path + probe + " - " + canonical + ".txt";
     readPoint(targetPath.c_str(), target);
     showRGB(rgbProbe,"Probe Face");
+    clock_t start,finish;
+    start=clock();
     
     for (int i = 0; i < size; i++)
     {
@@ -143,6 +158,11 @@ void identify()
 
         //cout << files[i].c_str() << endl;
     }
+    
+    finish=clock();
+    total_time+=(double)(finish-start)/CLOCKS_PER_SEC;
+    cout<<"||-----识别所花时间为:"<<total_time<<"s-----||"<<endl;
+    cout << "待检测脸深度文件："<< probe.c_str() << endl << distance_min << endl;
     cout << "识别脸深度文件为："<< depthResult.c_str() << endl << distance_min << endl;
     cout << "识别脸RGB文件为：" << rgbResult.c_str() << endl;
     showRGB(rgbPath+rgbResult, "Result Face");
@@ -150,8 +170,12 @@ void identify()
 
 void identify_shu()
 {
-    string probe = "002_s1";
+    
+//    string probe = "010_s1";
+    random_1=rand() % 21;
+    random_2=rand() % 5;
     string canonical = "001_s1";
+    string probe = ppl_no[random_1]+"_"+ppl_set[random_2];
     string rgbPath = "/Users/rydge/desktop/Current/BS/shu_face/rgb/";
     string rgbProbe = rgbPath + "/" + probe + ".bmp";
     string path = "/Users/rydge/desktop/Current/BS/shu_face/aligned/" + canonical + "/";
@@ -171,6 +195,8 @@ void identify_shu()
     shuReadPoints(targetPath.c_str(), target);
     showRGB(rgbProbe,"Probe Face");
     
+    clock_t start,finish;
+    start=clock();
     for (int i = 0; i < size; i++)
     {
         vector<Point3D> source, mark;
@@ -190,6 +216,9 @@ void identify_shu()
         showRGB_temp(rgbPath+rgbFiles[i],"Searching...");
         
     }
+    finish=clock();
+    total_time+=(double)(finish-start)/CLOCKS_PER_SEC;
+    cout<<"||-----识别所花时间为:"<<total_time<<"s-----||"<<endl;
     cout << "识别脸深度文件为："<< depthResult.c_str() << endl << distance_min << endl;
     cout << "识别脸RGB文件为：" << rgbResult.c_str() << endl;
     showRGB(rgbPath+rgbResult, "Result Face");
@@ -197,11 +226,12 @@ void identify_shu()
 
 int main(int argc, const char * argv[]) {
     
-    identify_shu();
+    srand((int)time(NULL));
+    
+//    identify_shu();
+    identify();
     
 //    identify_x2();
-    
-//    getFiles_test();
     
     return 0;
 }

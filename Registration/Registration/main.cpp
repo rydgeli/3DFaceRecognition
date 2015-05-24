@@ -8,6 +8,8 @@
 
 #include "regist.h"
 
+double total_time=0;
+
 void registration(const char *source_path, const char *target_path, const char *out_path)
 {
     vector<Point3D> source, target;
@@ -15,7 +17,13 @@ void registration(const char *source_path, const char *target_path, const char *
     double R[9], T[3];
     ReadPoint(source_path, source);
     ReadPoint(target_path, target);
+    clock_t start,finish;
+    double duration;
+    start=clock();
     ICP(source, target, out_path, R, T, e);
+    finish=clock();
+    duration=(double)(finish-start)/CLOCKS_PER_SEC;
+    cout<<"||-----完成一次配准时间为："<<duration<<"-----||"<<endl;
 }
 
 void registration_shu(const char *source_path, const char *target_path, const char *out_path)
@@ -25,14 +33,22 @@ void registration_shu(const char *source_path, const char *target_path, const ch
     double R[9],T[3];
     ReadPoint_shu(source_path, source);
     ReadPoint_shu(target_path, target);
+    clock_t start,finish;
+    double duration;
+    start=clock();
     ICP(source, target, out_path, R, T, e);
+    finish=clock();
+    duration=(double)(finish-start)/CLOCKS_PER_SEC;
+    total_time+=duration;
+    cout<<"||-----完成一次配准时间为："<<duration<<"-----||"<<endl;
+
 }
 
 void perform(string canonical)
 {
-    string canonical_path = "/Users/rydge/desktop/Current/BS/eurecom2/seg/depth_" + canonical + "_LightOn.txt";
-    string segPath = "/Users/rydge/desktop/Current/BS/eurecom2/seg/";
-    string alignedPath = "/Users/rydge/desktop/Current/BS/eurecom2/aligned/" + canonical + "/";
+    string canonical_path = "/Users/rydge/desktop/Current/BS/eurecom1/seg/depth_" + canonical + "_LightOn.txt";
+    string segPath = "/Users/rydge/desktop/Current/BS/eurecom1/seg/";
+    string alignedPath = "/Users/rydge/desktop/Current/BS/eurecom1/aligned/" + canonical + "/";
     string path = "";
     vector<string> segFiles;
     
@@ -71,8 +87,10 @@ void perform_shu(string canonical)
 
 int main()
 {
-    string canonical="008_s1";
+    string canonical="005_s1";
     perform_shu(canonical);
+//    perform(canonical);
+    cout<<"||-----总时间为"<<total_time<<"-----||"<<endl;
     return 0;
 }
 

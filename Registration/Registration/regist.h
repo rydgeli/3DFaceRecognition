@@ -15,6 +15,7 @@
 #include <vector>
 #include <fstream>
 #include "dirent.h"
+#include "time.h"
 
 using namespace std;
 

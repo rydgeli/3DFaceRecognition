@@ -132,6 +132,7 @@ void ICP(vector<Point3D> &source, vector<Point3D> &target, const char *path, dou
 {
     // P->source    Y->target
     printf("**********\nRegistration Begins!\n**********\n");
+    
     vector<Point3D> P, Y;
     vector<Point3D>::iterator it1, it2;
     double pre_d = 0.0, d = 0.0;
@@ -306,7 +307,7 @@ void ICP(vector<Point3D> &source, vector<Point3D> &target, const char *path, dou
             Writefile(path, P);
         }
         
-    } while (abs(d - pre_d) >= e && round < 20 );
+    } while (abs(d - pre_d) >= e && round < 30 );
     
     //it1 = P.begin();
     //source.clear();
